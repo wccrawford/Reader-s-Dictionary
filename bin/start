@@ -1,0 +1,2 @@
+#!/bin/bash
+~/android-sdk-linux_86/platform-tools/adb shell am start -a android.intent.action.MAIN -n com.kelahn.readersdictionary/.ReadersDictionary
