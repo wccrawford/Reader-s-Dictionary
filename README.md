@@ -1,8 +1,8 @@
 # ReadersDictionary
 
-Description goes here.
+Reader's Dictionary is designed to help readers look up words while they are reading, and then study the words afterwards.
 
 ## Copyright
 
-Copyright (c) 2011 Your Name. See LICENSE.txt for for futher details.
+Copyright (c) 2011 William Crawford. See LICENSE.txt for for futher details.
 
