@@ -27,16 +27,28 @@ optparse.parse!
 input = File.new( options[:input], 'r' )
 db = SQLite3::Database.new( options[:output] )
 
-line = input.gets
-
-while line = input.gets
-	puts line
-end
+db.execute("DROP TABLE dictionary;")
 
 db.execute("CREATE TABLE IF NOT EXISTS dictionary(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	word TEXT NOT NULL,
-	pronunciation TEXT NOT NULL,
+	pronunciation TEXT,
 	translation TEXT NOT NULL
 	);")
+
+line = input.gets
+
+regex = Regexp.new '^(?<word>[^ ]+)( ?\[(?<pronunciation>[^\]]+)\])?( ?/(?<translation>.+)/)?$'
+while line = input.gets
+	puts line
+	matches = regex.match(line)
+#	puts matches
+#	puts matches[:word]
+#	puts matches[:pronunciation]
+#	puts matches[:translation]
+	db.execute("INSERT INTO dictionary (word, pronunciation, translation) VALUES (?,?,?);",
+		[matches[:word], matches[:pronunciation], matches[:translation]])
+end
+
+input.close
 
