@@ -36,9 +36,9 @@ db.execute("CREATE TABLE IF NOT EXISTS dictionary(
 	translation TEXT NOT NULL
 	);")
 
-db.execute("create index idx_word on dictionary(word);");
-db.execute("create index idx_pronunciation on dictionary(pronunciation);");
-db.execute("create index idx_translation on dictionary(translation);");
+db.execute("CREATE INDEX idx_word ON dictionary(word COLLATE NOCASE);");
+db.execute("CREATE INDEX idx_pronunciation ON dictionary(pronunciation COLLATE NOCASE);");
+db.execute("CREATE INDEX idx_translation ON dictionary(translation COLLATE NOCASE);");
 
 line = input.gets
 

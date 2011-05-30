@@ -25,7 +25,8 @@ class ReadersDictionary < Activity
 		searchEdit = EditText(findViewById R.id.EditText01)
 		searchEdit.setOnKeyListener self
 
-		databaseLocation = '/data/data/com.kelahn.readersdictionary/databases/dictionary.db'
+		#databaseLocation = '/data/data/com.kelahn.readersdictionary/databases/dictionary.db'
+		databaseLocation = '/sdcard/com.kelahn.readersdictionary/databases/dictionary.db'
 
 		@dictionary = SQLiteDatabase.openDatabase(databaseLocation, null, SQLiteDatabase.OPEN_READONLY | SQLiteDatabase.NO_LOCALIZED_COLLATORS)
 	end
@@ -55,7 +56,7 @@ class ReadersDictionary < Activity
 		# Trim the ' from each side
 		escapedWord = escapedWord.substring(1, escapedWord.length-1)
 		unless escapedWord == '' then
-			cursor = @dictionary.rawQuery("SELECT word, pronunciation, translation FROM dictionary where word like '%" + escapedWord +  "%' or pronunciation like '%" + escapedWord +  "%' order by word;", null)
+			cursor = @dictionary.rawQuery("SELECT word, pronunciation, translation FROM dictionary where word like '" + escapedWord +  "%' or pronunciation like '" + escapedWord +  "%' order by word collate nocase;", null)
 			cursor.moveToFirst
 			until cursor.isAfterLast do
 				word = cursor.getString(cursor.getColumnIndex('word'))
