@@ -50,15 +50,12 @@ class ReadersDictionary < Activity
 
 		displayText = TextView(findViewById R.id.textView1)
 
-		displayText.append(searchEdit.getText)
-
-#		searchTerms = String[1]
-#		searchTerms[0] = searchEdit.getText.toString
 		# Can't use proper paramterization thanks to a long-standing Android bug.
 		escapedWord = DatabaseUtils.sqlEscapeString(searchEdit.getText.toString)
-		escapedWord = escapedWord.substring(1, escapedWord.length-1);
+		# Trim the ' from each side
+		escapedWord = escapedWord.substring(1, escapedWord.length-1)
 		unless escapedWord == '' then
-			cursor = @dictionary.rawQuery("SELECT word, pronunciation, translation FROM dictionary where word like '%" + escapedWord +  "%';", null)
+			cursor = @dictionary.rawQuery("SELECT word, pronunciation, translation FROM dictionary where word like '%" + escapedWord +  "%' or pronunciation like '%" + escapedWord +  "%' order by word;", null)
 			cursor.moveToFirst
 			until cursor.isAfterLast do
 				word = cursor.getString(cursor.getColumnIndex('word'))

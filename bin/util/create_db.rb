@@ -36,6 +36,10 @@ db.execute("CREATE TABLE IF NOT EXISTS dictionary(
 	translation TEXT NOT NULL
 	);")
 
+db.execute("create index idx_word on dictionary(word);");
+db.execute("create index idx_pronunciation on dictionary(pronunciation);");
+db.execute("create index idx_translation on dictionary(translation);");
+
 line = input.gets
 
 regex = Regexp.new '^(?<word>[^ ]+)( ?\[(?<pronunciation>[^\]]+)\])?( ?/(?<translation>.+)/)?$'
