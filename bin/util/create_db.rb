@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require 'sqlite3'
 require 'optparse'
 
@@ -29,16 +30,16 @@ db = SQLite3::Database.new( options[:output] )
 
 db.execute("DROP TABLE IF EXISTS dictionary;")
 
-db.execute("CREATE TABLE IF NOT EXISTS dictionary(
-	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	word TEXT NOT NULL,
+db.execute("CREATE VIRTUAL TABLE dictionary USING FTS3(
+	word TEXT,
 	pronunciation TEXT,
-	translation TEXT NOT NULL
+	translation TEXT
 	);")
+	#id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-db.execute("CREATE INDEX idx_word ON dictionary(word COLLATE NOCASE);");
-db.execute("CREATE INDEX idx_pronunciation ON dictionary(pronunciation COLLATE NOCASE);");
-db.execute("CREATE INDEX idx_translation ON dictionary(translation COLLATE NOCASE);");
+#db.execute("CREATE INDEX idx_word ON dictionary(word COLLATE NOCASE);");
+#db.execute("CREATE INDEX idx_pronunciation ON dictionary(pronunciation COLLATE NOCASE);");
+#db.execute("CREATE INDEX idx_translation ON dictionary(translation COLLATE NOCASE);");
 
 line = input.gets
 

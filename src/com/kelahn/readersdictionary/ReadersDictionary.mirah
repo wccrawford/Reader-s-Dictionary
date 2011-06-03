@@ -56,7 +56,8 @@ class ReadersDictionary < Activity
 		# Trim the ' from each side
 		escapedWord = escapedWord.substring(1, escapedWord.length-1)
 		unless escapedWord == '' then
-			cursor = @dictionary.rawQuery("SELECT word, pronunciation, translation FROM dictionary where word like '" + escapedWord +  "%' or pronunciation like '" + escapedWord +  "%' order by word collate nocase;", null)
+			#cursor = @dictionary.rawQuery("SELECT word, pronunciation, translation FROM dictionary where word like '" + escapedWord +  "%' or pronunciation like '" + escapedWord +  "%' order by word collate nocase;", null)
+			cursor = @dictionary.rawQuery("SELECT word, pronunciation, translation FROM dictionary where dictionary match '" + escapedWord +  "*' order by word;", null)
 			cursor.moveToFirst
 			until cursor.isAfterLast do
 				word = cursor.getString(cursor.getColumnIndex('word'))
