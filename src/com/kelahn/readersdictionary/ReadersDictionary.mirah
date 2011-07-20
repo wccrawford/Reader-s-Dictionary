@@ -59,6 +59,8 @@ class ReadersDictionary < Activity
 			#cursor = @dictionary.rawQuery("SELECT word, pronunciation, translation FROM dictionary where word like '" + escapedWord +  "%' or pronunciation like '" + escapedWord +  "%' order by word collate nocase;", null)
 			cursor = @dictionary.rawQuery("SELECT word, pronunciation, translation FROM dictionary where dictionary match '" + escapedWord +  "*' order by word;", null)
 			cursor.moveToFirst
+			# Clear the display
+			displayText.setText('');
 			until cursor.isAfterLast do
 				word = cursor.getString(cursor.getColumnIndex('word'))
 				pronunciation = cursor.getString(cursor.getColumnIndex('pronunciation'))
